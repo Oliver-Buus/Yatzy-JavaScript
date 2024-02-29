@@ -1,22 +1,44 @@
-const dice = []
+const dice = [];
+const diceImages = ['dice/dice-six-faces-one.png', 'dice/dice-six-faces-two.png',
+                    'dice/dice-six-faces-three.png', 'dice/dice-six-faces-four.png',
+                    'dice/dice-six-faces-five.png', 'dice/dice-six-faces-six.png'];
 const labels = ["1-s", "2-s", "3-s", "4-s", "5-s", "6-s",
                 "One pair", "Two pairs", "Three same",
                 "Four same", "Full house", "Small straight",
                 "Large straight", "Chance", "Yatzy"];
 const inputBoxes = [];
 
-let gridDice = document.getElementById('grid-dice');
+let diceDiv = document.getElementById('dice');
 let gridPoints = document.getElementById('grid-points');
 
 // Indsætter 5 billeder af terninger i gridDice
 for (let i = 0; i < 5; i++) {
     let img = document.createElement('img');
+    dice[i] = img;
     img.className = 'dice';
     img.id = 'die' + i;
     img.src = "dice/dice-six-faces-one.png";
-    gridDice.appendChild(img);
+    diceDiv.appendChild(img);
 }
 
+// Funktion der ruller med terningerne.
+function rollDice() {
+    for (let die of dice) {
+        // Der skal være check på at terningen ikke bliver "holdt"
+        let randomNumber = Math.floor(Math.random() * 6);
+        die.src = diceImages[randomNumber];
+    }
+}
+
+for (let die of dice) {
+
+}
+
+let button = document.createElement('button');
+button.addEventListener('click', event => {
+    rollDice();
+});
+gridDice.appendChild(button);
 
 
 // Indsætter labels og inputs på gridPoints
