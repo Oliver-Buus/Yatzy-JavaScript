@@ -8,6 +8,7 @@ const labels = ["1-s", "2-s", "3-s", "4-s", "5-s", "6-s",
                 "Large straight", "Chance", "Yatzy"];
 const inputBoxes = [];
 
+let gridDice = document.getElementById('grid-dice');
 let diceDiv = document.getElementById('dice');
 let gridPoints = document.getElementById('grid-points');
 
@@ -30,9 +31,6 @@ function rollDice() {
     }
 }
 
-for (let die of dice) {
-
-}
 
 let button = document.createElement('button');
 button.addEventListener('click', event => {
@@ -49,6 +47,7 @@ for (let i = 0; i < labels.length; i++) {
 
     let input = document.createElement('input');
     input.id = 'input' + i;
+    input.className = 'inputs';
     inputBoxes[i] = input;
     gridPoints.appendChild(input);
 }
