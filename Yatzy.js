@@ -31,6 +31,15 @@ function rollDice() {
     }
 }
 
+for (let die of dice) {
+    die.addEventListener('click', event => {
+        if (die.style.border == '3px solid red') {
+            die.style.border = '';
+        } else {
+            die.style.border = '3px solid red';
+        }
+    })
+}
 
 let button = document.createElement('button');
 button.addEventListener('click', event => {
@@ -41,13 +50,17 @@ gridDice.appendChild(button);
 
 // Indsætter labels og inputs på gridPoints
 for (let i = 0; i < labels.length; i++) {
+    let labInpDiv = document.createElement('div');
+    labInpDiv.className = 'labInpDiv';
     let label = document.createElement('label');
+    label.className = 'labels';
     label.textContent = labels[i];
-    gridPoints.appendChild(label);
+    labInpDiv.appendChild(label);
 
     let input = document.createElement('input');
     input.id = 'input' + i;
     input.className = 'inputs';
     inputBoxes[i] = input;
-    gridPoints.appendChild(input);
+    labInpDiv.appendChild(input);
+    gridPoints.appendChild(labInpDiv);
 }

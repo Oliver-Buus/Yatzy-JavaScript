@@ -26,7 +26,25 @@
 
 .inputs {
     width: 40px;
-        flex: 1 1 auto;
-        margin:0 auto;
+        margin: 0 auto;
         display:block;
 }
+
+
+.labels {
+    width: 150px;
+    margin:0 auto;
+    display:block;
+    text-align: left;
+}
+
+
+.labInpDiv {
+    margin: 1rem;
+    text-align: left;
+  }
+
+  
+.inputs, .labels {
+    display: inline-block;
+  }
