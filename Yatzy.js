@@ -58,6 +58,7 @@ for (let i = 0; i < labels.length; i++) {
     label.textContent = labels[i];
     labInpDiv.appendChild(label);
 
+
     let input = document.createElement('input');
     input.id = 'input' + i;
     input.className = 'inputs';
@@ -65,3 +66,19 @@ for (let i = 0; i < labels.length; i++) {
     labInpDiv.appendChild(input);
     gridPoints.appendChild(labInpDiv);
 }
+
+// Returnerer summen af de 6 første pointfelter til BONUS
+for (let i = 0; i < 6; i++) {
+    let sum = 0;
+    sum += inputBoxes[i];
+    if (sum >= 63) {
+        let bonusBox = 50;
+    }
+}
+
+// Returnerer total sum at alle point-felterne
+let total = 0;
+for (let inputBox of inputBoxes) {
+    total += inputBox;
+}
+
