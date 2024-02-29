@@ -8,19 +8,22 @@ const inputBoxes = [];
 let gridDice = document.getElementById('grid-dice');
 let gridPoints = document.getElementById('grid-points');
 
+// Indsætter 5 billeder af terninger i gridDice
 for (let i = 0; i < 5; i++) {
     let img = document.createElement('img');
+    img.className = 'dice';
+    img.id = 'die' + i;
     img.src = "dice/dice-six-faces-one.png";
     gridDice.appendChild(img);
 }
 
 
 
+// Indsætter labels og inputs på gridPoints
 for (let i = 0; i < labels.length; i++) {
     let label = document.createElement('label');
     label.textContent = labels[i];
     gridPoints.appendChild(label);
-
 
     let input = document.createElement('input');
     input.id = 'input' + i;
