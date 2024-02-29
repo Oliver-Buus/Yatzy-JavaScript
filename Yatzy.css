@@ -3,13 +3,23 @@
     column-gap: 30px;
 }
 
-.grid-item {
-    background-color: rgba(240, 204, 43, 0.8);
+#grid-dice {
+    background-color: rgba(240, 178, 43, 0.699);
     border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    padding: 200px;
     font-size: 30px;
     text-align: center;
-    grid-row-start: 1;
-    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    width: 200px;
+}
+
+#grid-points {
+    background-color: rgba(240, 178, 43, 0.699);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 200px;
+    font-size: 30px;
+    text-align: center;
+    width: 200px;
 }
 
