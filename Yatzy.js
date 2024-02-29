@@ -33,15 +33,16 @@ function rollDice() {
 
 for (let die of dice) {
     die.addEventListener('click', event => {
-        if (die.style.border == '3px solid red') {
-            die.style.border = '';
+        if (die.style.filter == 'brightness(0.75)') {
+            die.style.filter = '';
         } else {
-            die.style.border = '3px solid red';
+            die.style.filter = 'brightness(0.75)';
         }
     })
 }
 
 let button = document.createElement('button');
+button.textContent = 'Roll';
 button.addEventListener('click', event => {
     rollDice();
 });
