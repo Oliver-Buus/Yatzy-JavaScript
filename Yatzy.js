@@ -155,6 +155,18 @@ function frequency() {
 }
 
 // Note til points - Måske flytte return statement en gang ned.
+function sameValuePointsHandler(amount) {
+return function() {
+
+    let sameValuePoint = 0;
+    let freq = frequency();
+            sameValuePoint = amount * freq[amount];
+    this.value = sameValuePoint;
+    }
+}
+for (let i = 0; i < 6; i++) {
+    inputBoxes[i].addEventListener('click', sameValuePointsHandler(i + 1));
+}
 
 // ONE PAIR POINTS
 function onePairHandler() {
@@ -180,8 +192,8 @@ function twoPairHandler() {
             pairs++;
         }
     }
-    if (pairs >= 2) {
-        twoPairsPoint;
+    if (pairs < 2) {
+        twoPairsPoint = 0;
     }
     this.value = twoPairsPoint;
 }
