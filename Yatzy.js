@@ -62,10 +62,10 @@ function rollDice() {
 
 for (let die of dice) {
     die.addEventListener('click', event => {
-        if (die.style.filter == 'brightness(0.80)') {
+        if (die.style.filter == 'brightness(0.75)') {
             die.style.filter = '';
         } else {
-            die.style.filter = 'brightness(0.70)';
+            die.style.filter = 'brightness(0.75)';
         }
     })
 }
@@ -140,4 +140,131 @@ for (let i = 0; i < 6; i++) {
 let total = 0;
 for (let inputBox of inputBoxes) {
     total += inputBox;
+}
+
+// Tæller antallet af samme slags på terningerne
+function frequency() {
+    let frequency = [7];
+    for (let diceValues of dice) {
+        frequency[value]++;
+    }
+    return frequency;
+}
+
+// Note til points - Måske flytte return statement en gang ned.
+
+function onePairPoints() {
+    inputBoxes[6].addEventListener('click', event => {
+            let pairPoint = 0;
+    let freq = frequency();
+    for (let i = 1; i < freq.length; i++) {
+        if (frequency[i] >= 2) {
+            pairPoint = i * 2;
+        }
+    }
+    return pairPoint;
+    })
+}
+
+function twoPairsPoints() {
+    inputBoxes[7].addEventListener('click', event => {
+            let twoPairsPoint = 0;
+    let freq = frequency();
+    let pairs = 0;
+    for (let i = 1; i < freq.length; i++) {
+        if (frequency[i] >= 2) {
+            pairPoint += i * 2;
+            pairs++;
+        }
+    }
+    if (pairs >= 2) {
+        pairPoint;
+    }
+    return pairPoint;
+    })
+}
+
+function threeSamePoints() {
+    inputBoxes[8].addEventListener('click', event => {
+            let threeSamePoint = 0;
+    let freq = frequency();
+    for (let i = 1; i < freq.length; i++) {
+        if (frequency[i] >= 3) {
+            threeSamePoint = i * 3;
+        }
+    }
+    return threeSamePoint;
+    })
+}
+
+function fourSamePoints() {
+    inputBoxes[9].addEventListener('click', event => {
+            let fourSamePoint = 0;
+    let freq = frequency();
+    for (let i = 1; i < freq.length; i++) {
+        if (frequency[i] >= 4) {
+            fourSamePoint = i * 4;
+        }
+    }
+    return fourSamePoint;
+    })
+}
+
+function fullHousePoints() {
+    inputBoxes[10].addEventListener('click', event => {
+            let fullHousePoint = 0;
+    let freq = frequency();
+    let two = 0;
+    let three = 0;
+    for (let i = 1; i < freq.length; i++) {
+        if (frequency[i] == 2) {
+            fullHousePoint += i * freq[i];
+            two++;
+        } else if (frequency[i] == 3) {
+            fullHousePoint += i * freq[i];
+            three++;
+        }
+    }
+    if (two !== 1 || three !== 1) {
+        fullHousePoint = 0;
+    }
+    return fullHousePoint;
+    })
+}
+
+function smallStraightPoints() {
+    inputBoxes[11].addEventListener('click', event => {
+            let smallStraightPoint = 0;
+    let freq = frequency();
+    if (freq[1] >= 1 && freq[2] >= 1 && freq[3] >= 1 && freq[4] >= 1 && freq[5] >= 1) {
+        smallStraightPoint = 15;
+    }
+    return smallStraightPoint;
+    })
+}
+
+function largeStraightPoints() {
+    inputBoxes[12].addEventListener('click', event => {
+            let largeStraightPoint = 0;
+    let freq = frequency();
+    if (freq[2] >= 1 && freq[3] >= 1 && freq[4] >= 1 && freq[5] >= 1 && freq[6] >= 1) {
+        largeStraightPoint = 20;
+    }
+    return largeStraightPoint;
+    })
+}
+
+function chancePoints() {
+    inputBoxes[13].addEventListener('click', event => {
+            let chancePoint = 0;
+    for (let diceValues of dice) {
+        chancePoint += diceValues;
+    }
+    return chancePoint;
+    })
+}
+
+function yatzyPoints() {
+    const isYatzy = dice.every((value) => value === dice[0]);
+    const yatzy = isYatzy ? 50 : 0;
 }
