@@ -7,11 +7,15 @@ const labels = ["1-s", "2-s", "3-s", "4-s", "5-s", "6-s",
                 "Four same", "Full house", "Small straight",
                 "Large straight", "Chance", "Yatzy"];
 const inputBoxes = [];
-let diceValues = [];
+let diceValues = new Array(5).fill(0);
 
 let gridDice = document.getElementById('grid-dice');
 let diceDiv = document.getElementById('dice');
 let gridPoints = document.getElementById('grid-points');
+
+gridPoints.addEventListener('click', event => {
+    calculateBonus();
+})
 
 
 // Indsætter 5 billeder af terninger i gridDice
@@ -26,7 +30,7 @@ for (let i = 0; i < 5; i++) {
 
 // Finder værdien af hver die og indsætter den i et array.
 function calculateDiceValues() {
-    diceValues.splice(0, diceValues.length);
+    diceValues.splice(0, diceValues.length); // Nulstiller værdierne
 
     for (let die of dice) {
         let src = die.src;
@@ -103,9 +107,14 @@ for (let i = 0; i < labels.length; i++) {
 
     if (i == 5) {
         createLabel('sumAndBonusLabel', 'Sum:', labelInputDivElement);
-        createInput('sumAndBonusInput', 'sumInput', labelInputDivElement, 15);
+        createInput('sumAndBonusInput', 'sumInput', labelInputDivElement, '15');
         createLabel('sumAndBonusLabel', 'Bonus:', labelInputDivElement);
-        createInput('sumAndBonusInput', 'bonusInput', labelInputDivElement, 16);
+        createInput('sumAndBonusInput', 'bonusInput', labelInputDivElement, '16');
+    }
+
+    if (i == labels.length - 1) {
+        createLabel('totalLabel', 'Total:', labelInputDivElement);
+        createInput('totalInput', 'totalInput', labelInputDivElement, 17);
     }
 
     gridPoints.appendChild(labelInputDivElement);
@@ -130,28 +139,50 @@ function createInput(className, id, parent, index) {
 }
 
 // Returnerer summen af de 6 første pointfelter til BONUS
-for (let i = 0; i < 6; i++) {
+function calculateBonus() {
     let sum = 0;
-    sum += inputBoxes[i];
-    if (sum >= 63) {
-        let bonusBox = 50;
+    for (let i = 0; i < 6; i++) {
+        let value = parseInt(inputBoxes[i].value);
+        if (!isNaN(value)) {
+            sum += value;
+        }
     }
+
+    let bonus = sum >= 63 ? 50 : 0;
+    document.getElementById('sumInput').value = sum;
+    document.getElementById('bonusInput').value = bonus;
 }
 
 
 // Returnerer total sum at alle point-felterne
 let total = 0;
 for (let inputBox of inputBoxes) {
-    total += inputBox;
+    if (!isNaN(inputBox.value))
+    total += inputBox.value;
 }
 
 // Tæller antallet af samme slags på terningerne
 function frequency() {
     let frequency = new Array(7).fill(0);
+
     for (let value of diceValues) {
         frequency[value]++;
     }
     return frequency;
+}
+
+function sameValuePointsHandler(value) {
+    return function() {
+
+        let sameValuePoint = 0;
+        let freq = frequency();
+        sameValuePoint = value * freq[value];
+        this.value = sameValuePoint;
+    }
+}
+
+for (let i = 0; i < 6; i++) {
+    inputBoxes[i].addEventListener('click', sameValuePointsHandler(i + 1));
 }
 
 // Note til points - Måske flytte return statement en gang ned.

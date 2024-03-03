@@ -27,13 +27,13 @@
 }
 
 .inputs {
-    width: 35px;
+    width: 8%;
         margin: 0 auto;
         display:block;
 }
 
 .labels {
-    width: 150px;
+    width: 30%;
     margin:0 auto;
     display:block;
     text-align: left;
@@ -48,13 +48,13 @@
     display: inline-block;
   }
 
-.sumAndBonusLabel {
+.sumAndBonusLabel, .totalLabel {
     width: 150px;
     margin-left: 10%;
 
 }
 
-.sumAndBonusInput {
-    width: 35px;
+.sumAndBonusInput, .totalInput {
+    width: 8%;
     margin-left: 2%;
 }
