@@ -27,7 +27,7 @@
 }
 
 .inputs {
-    width: 40px;
+    width: 35px;
         margin: 0 auto;
         display:block;
 }
@@ -39,11 +39,22 @@
     text-align: left;
 }
 
-.labInpDiv {
+.labelInputDivElement {
     margin: 1rem;
     text-align: left;
   }
 
 .inputs, .labels {
     display: inline-block;
-  }
+}
+
+.sumAndBonusLabel {
+    width: 150px;
+    margin-left: 10%;
+
+}
+
+.sumAndBonusInput {
+    width: 35px;
+    margin-left: 2%;
+}
