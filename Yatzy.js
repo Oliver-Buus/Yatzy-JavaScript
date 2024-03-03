@@ -26,6 +26,8 @@ for (let i = 0; i < 5; i++) {
 
 // Finder værdien af hver die og indsætter den i et array.
 function calculateDiceValues() {
+    diceValues.splice(0, diceValues.length);
+
     for (let die of dice) {
         let src = die.src;
         switch (true) {
@@ -136,6 +138,7 @@ for (let i = 0; i < 6; i++) {
     }
 }
 
+
 // Returnerer total sum at alle point-felterne
 let total = 0;
 for (let inputBox of inputBoxes) {
@@ -144,8 +147,8 @@ for (let inputBox of inputBoxes) {
 
 // Tæller antallet af samme slags på terningerne
 function frequency() {
-    let frequency = [7];
-    for (let diceValues of dice) {
+    let frequency = new Array(7).fill(0);
+    for (let value of diceValues) {
         frequency[value]++;
     }
     return frequency;
@@ -153,74 +156,72 @@ function frequency() {
 
 // Note til points - Måske flytte return statement en gang ned.
 
-function onePairPoints() {
-    inputBoxes[6].addEventListener('click', event => {
-            let pairPoint = 0;
-    let freq = frequency();
-    for (let i = 1; i < freq.length; i++) {
-        if (frequency[i] >= 2) {
-            pairPoint = i * 2;
+// ONE PAIR POINTS
+function onePairHandler() {
+     let pairPoint = 0;
+     let freq = frequency();
+     for (let i = 1; i < freq.length; i++) {
+        if (freq[i] >= 2) {
+           pairPoint = i * 2;
         }
     }
-    return pairPoint;
-    })
+    this.value = pairPoint;
 }
+inputBoxes[6].addEventListener('click', onePairHandler);
 
-function twoPairsPoints() {
-    inputBoxes[7].addEventListener('click', event => {
-            let twoPairsPoint = 0;
+// TWO PAIR POINTS
+function twoPairHandler() {
+    let twoPairsPoint = 0;
     let freq = frequency();
     let pairs = 0;
     for (let i = 1; i < freq.length; i++) {
-        if (frequency[i] >= 2) {
-            pairPoint += i * 2;
+        if (freq[i] >= 2) {
+            twoPairsPoint += i * 2;
             pairs++;
         }
     }
     if (pairs >= 2) {
-        pairPoint;
+        twoPairsPoint;
     }
-    return pairPoint;
-    })
+    this.value = twoPairsPoint;
 }
+inputBoxes[7].addEventListener('click', twoPairHandler);
 
-function threeSamePoints() {
-    inputBoxes[8].addEventListener('click', event => {
-            let threeSamePoint = 0;
+
+function threeSameHandler() {
+    let threeSamePoint = 0;
     let freq = frequency();
     for (let i = 1; i < freq.length; i++) {
-        if (frequency[i] >= 3) {
+        if (freq[i] >= 3) {
             threeSamePoint = i * 3;
         }
     }
-    return threeSamePoint;
-    })
+    this.value = threeSamePoint;
 }
+inputBoxes[8].addEventListener('click', threeSameHandler);
 
-function fourSamePoints() {
-    inputBoxes[9].addEventListener('click', event => {
-            let fourSamePoint = 0;
+function fourSameHandler() {
+    let fourSamePoint = 0;
     let freq = frequency();
     for (let i = 1; i < freq.length; i++) {
-        if (frequency[i] >= 4) {
+        if (freq[i] >= 4) {
             fourSamePoint = i * 4;
         }
     }
-    return fourSamePoint;
-    })
+    this.value = fourSamePoint;
 }
+inputBoxes[9].addEventListener('click', fourSameHandler);
 
-function fullHousePoints() {
-    inputBoxes[10].addEventListener('click', event => {
-            let fullHousePoint = 0;
+function fullHouseHandler() {
+    let fullHousePoint = 0;
     let freq = frequency();
     let two = 0;
     let three = 0;
     for (let i = 1; i < freq.length; i++) {
-        if (frequency[i] == 2) {
+        if (freq[i] == 2) {
             fullHousePoint += i * freq[i];
             two++;
-        } else if (frequency[i] == 3) {
+        } else if (freq[i] == 3) {
             fullHousePoint += i * freq[i];
             three++;
         }
@@ -228,43 +229,47 @@ function fullHousePoints() {
     if (two !== 1 || three !== 1) {
         fullHousePoint = 0;
     }
-    return fullHousePoint;
-    })
+    this.value = fullHousePoint;
 }
+inputBoxes[10].addEventListener('click', fullHouseHandler);
 
-function smallStraightPoints() {
-    inputBoxes[11].addEventListener('click', event => {
-            let smallStraightPoint = 0;
+function smallStraightHandler() {
+    let smallStraightPoint = 0;
     let freq = frequency();
     if (freq[1] >= 1 && freq[2] >= 1 && freq[3] >= 1 && freq[4] >= 1 && freq[5] >= 1) {
         smallStraightPoint = 15;
     }
-    return smallStraightPoint;
-    })
+    this.value = smallStraightPoint;
 }
+inputBoxes[11].addEventListener('click', smallStraightHandler);
 
-function largeStraightPoints() {
-    inputBoxes[12].addEventListener('click', event => {
-            let largeStraightPoint = 0;
+function largeStraightHandler() {
+    let largeStraightPoint = 0;
     let freq = frequency();
     if (freq[2] >= 1 && freq[3] >= 1 && freq[4] >= 1 && freq[5] >= 1 && freq[6] >= 1) {
         largeStraightPoint = 20;
     }
-    return largeStraightPoint;
-    })
+    this.value = largeStraightPoint;
 }
+inputBoxes[12].addEventListener('click', largeStraightHandler);
 
-function chancePoints() {
-    inputBoxes[13].addEventListener('click', event => {
-            let chancePoint = 0;
-    for (let diceValues of dice) {
-        chancePoint += diceValues;
+function chancePointsHandler() {
+    let chancePoint = 0;
+    for (let value of diceValues) {
+        chancePoint += value;
     }
-    return chancePoint;
-    })
+    this.value = chancePoint;
 }
+inputBoxes[13].addEventListener('click', chancePointsHandler);
 
-function yatzyPoints() {
-    const isYatzy = dice.every((value) => value === dice[0]);
-    const yatzy = isYatzy ? 50 : 0;
+function yatzyPointsHandler() {
+    let yatzyPoint = 0;
+    let freq = frequency();
+    for (let i = 1; i < freq.length; i++) {
+        if (freq[i] == 5) {
+            yatzyPoint = 50;
+        }
+    }
+    this.value = yatzyPoint;
 }
+inputBoxes[14].addEventListener('click', yatzyPointsHandler);
