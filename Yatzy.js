@@ -62,10 +62,10 @@ function rollDice() {
 
 for (let die of dice) {
     die.addEventListener('click', event => {
-        if (die.style.filter == 'brightness(0.75)') {
+        if (die.style.filter == 'brightness(0.80)') {
             die.style.filter = '';
         } else {
-            die.style.filter = 'brightness(0.75)';
+            die.style.filter = 'brightness(0.70)';
         }
     })
 }
@@ -77,6 +77,7 @@ button.addEventListener('click', event => {
     if (rolls < 3) {
         rollDice();
         calculateDiceValues();
+
         for(let dieValue of diceValues) {
             console.log(dieValue);
         }
