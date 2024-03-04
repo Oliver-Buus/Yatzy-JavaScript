@@ -189,7 +189,6 @@ function sameValuePointsHandlerPreShow(amount) {
         let sameValuePoint = 0;
         let freq = frequency();
                 sameValuePoint = amount * freq[amount];
-        this.value = sameValuePoint;
         return sameValuePoint;
         }
     
@@ -200,9 +199,8 @@ return function() {
 
     let sameValuePoint = 0;
     let freq = frequency();
-            sameValuePoint = amount * freq[amount];
-    this.value = sameValuePoint;
-    this.removeEventListener('click', sameValuePointsHandler(amount));
+    sameValuePoint = amount * freq[amount];
+
     return sameValuePoint;
     }
 }
@@ -237,10 +235,6 @@ function twoPairHandler() {
     if (pairs < 2) {
         twoPairsPoint = 0;
     }
-    if (rolls > 0) {
-        this.value = twoPairsPoint;
-        inputBoxes[7].removeEventListener('click', twoPairHandler);
-    }
     return twoPairsPoint;
 }
 inputBoxes[7].addEventListener('click', twoPairHandler);
@@ -255,8 +249,6 @@ function threeSameHandler() {
         }
     }
 
-    this.value = threeSamePoint;
-    inputBoxes[8].removeEventListener('click', threeSameHandler);
     return threeSamePoint;
 }
 inputBoxes[8].addEventListener('click', threeSameHandler);
@@ -269,8 +261,7 @@ function fourSameHandler() {
             fourSamePoint = i * 4;
         }
     }
-    this.value = fourSamePoint;
-    inputBoxes[9].removeEventListener('click', fourSameHandler);
+
     return fourSamePoint;
 }
 inputBoxes[9].addEventListener('click', fourSameHandler);
@@ -292,8 +283,7 @@ function fullHouseHandler() {
     if (two !== 1 || three !== 1) {
         fullHousePoint = 0;
     }
-    this.value = fullHousePoint;
-    inputBoxes[10].removeEventListener('click', fullHouseHandler);
+
     return fullHousePoint;
 }
 inputBoxes[10].addEventListener('click', fullHouseHandler);
@@ -304,8 +294,7 @@ function smallStraightHandler() {
     if (freq[1] >= 1 && freq[2] >= 1 && freq[3] >= 1 && freq[4] >= 1 && freq[5] >= 1) {
         smallStraightPoint = 15;
     }
-    this.value = smallStraightPoint;
-    inputBoxes[11].removeEventListener('click', smallStraightHandler);
+
     return smallStraightPoint;
 }
 inputBoxes[11].addEventListener('click', smallStraightHandler);
@@ -316,8 +305,7 @@ function largeStraightHandler() {
     if (freq[2] >= 1 && freq[3] >= 1 && freq[4] >= 1 && freq[5] >= 1 && freq[6] >= 1) {
         largeStraightPoint = 20;
     }
-    this.value = largeStraightPoint;
-    inputBoxes[12].removeEventListener('click', largeStraightHandler);
+
     return largeStraightPoint;
 }
 inputBoxes[12].addEventListener('click', largeStraightHandler);
@@ -327,8 +315,7 @@ function chancePointsHandler() {
     for (let value of diceValues) {
         chancePoint += value;
     }
-    this.value = chancePoint;
-    inputBoxes[13].removeEventListener('click', chancePointsHandler);
+
     return chancePoint;
 }
 inputBoxes[13].addEventListener('click', chancePointsHandler);
@@ -341,8 +328,7 @@ function yatzyPointsHandler() {
             yatzyPoint = 50;
         }
     }
-    this.value = yatzyPoint;
-    inputBoxes[14].removeEventListener('click', yatzyPointsHandler);
+
     return yatzyPoint;
 }
 inputBoxes[14].addEventListener('click', yatzyPointsHandler);
@@ -350,13 +336,18 @@ inputBoxes[14].addEventListener('click', yatzyPointsHandler);
 
 
 let inputs = document.getElementsByClassName('inputs');
-const functions = [];s
+let functions = [sameValuePointsHandlerPreShow.bind(null, 1), sameValuePointsHandlerPreShow.bind(null, 2),
+    sameValuePointsHandlerPreShow.bind(null, 3), sameValuePointsHandlerPreShow.bind(null, 4),
+    sameValuePointsHandlerPreShow.bind(null, 5), sameValuePointsHandlerPreShow.bind(null, 6),
+    onePairHandler, twoPairHandler, threeSameHandler, fourSameHandler,
+    fullHouseHandler, smallStraightHandler, largeStraightHandler, chancePointsHandler, yatzyPointsHandler];
 
-for (let input of inputs) {
-    input.addEventListener('click', function handler() {
+for (let i = 0; i < inputs.length;i++) {
+    inputs[i].addEventListener('click', function handler() {
         if (rolls != 0) {
-            input.value = onePairHandler();
-            input.removeEventListener('click', handler);
+            let number = functions[i]();
+            inputs[i].value = number;
+            inputs[i].removeEventListener('click', handler);
         }
 
         rolls = 0;
