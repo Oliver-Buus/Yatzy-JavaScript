@@ -12,19 +12,20 @@
     width: fit-content;
 }
 
- .dice {
+#grid-points {
+   background-color: rgba(240, 178, 43, 0.699);
+   border: 1px solid rgba(0, 0, 0, 0.8);
+   padding: 20px;
+   font-size: 15px;
+   text-align: left;
+   width: 560px;
+}
+
+.dice {
     width: 100px;
     height: 100px;
 }
 
- #grid-points {
-    background-color: rgba(240, 178, 43, 0.699);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 15px;
-    text-align: left;
-    width: 560px;
-}
 
 .inputs {
     width: 8%;

@@ -73,7 +73,7 @@ for (let die of dice) {
     die.addEventListener('click', event => {
         if (die.style.filter == 'brightness(0.75)') {
             die.style.filter = '';
-        } else {
+        } else if (rolls != 0) {
             die.style.filter = 'brightness(0.75)';
         }
     })
