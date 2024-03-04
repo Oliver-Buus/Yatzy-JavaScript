@@ -83,6 +83,19 @@ button.addEventListener('click', event => {
     if (rolls < 3) {
         rollDice();
         calculateDiceValues();
+        // Placeholders til alle inputs
+        for (let i = 0; i < 6; i++) {
+            inputBoxes[i].placeholder = sameValuePointsHandlerPreShow(i + 1);
+        }
+        inputBoxes[6].placeholder = onePairHandler();
+        inputBoxes[7].placeholder = twoPairHandler();
+        inputBoxes[8].placeholder = threeSameHandler();
+        inputBoxes[9].placeholder = fourSameHandler();
+        inputBoxes[10].placeholder = fullHouseHandler();
+        inputBoxes[11].placeholder = smallStraightHandler();
+        inputBoxes[12].placeholder = largeStraightHandler();
+        inputBoxes[13].placeholder = chancePointsHandler();
+        inputBoxes[14].placeholder = yatzyPointsHandler();
 
         for(let dieValue of diceValues) {
             console.log(dieValue);
@@ -171,19 +184,14 @@ function frequency() {
     return frequency;
 }
 
-function sameValuePointsHandler(value) {
-    return function() {
-
+function sameValuePointsHandlerPreShow(amount) {
         let sameValuePoint = 0;
         let freq = frequency();
-        sameValuePoint = value * freq[value];
+                sameValuePoint = amount * freq[amount];
         this.value = sameValuePoint;
-    }
-}
-
-for (let i = 0; i < 6; i++) {
-    inputBoxes[i].addEventListener('click', sameValuePointsHandler(i + 1));
-}
+        return sameValuePoint;
+        }
+    
 
 // Note til points - Måske flytte return statement en gang ned.
 function sameValuePointsHandler(amount) {
@@ -193,6 +201,7 @@ return function() {
     let freq = frequency();
             sameValuePoint = amount * freq[amount];
     this.value = sameValuePoint;
+    return sameValuePoint;
     }
 }
 for (let i = 0; i < 6; i++) {
@@ -209,6 +218,7 @@ function onePairHandler() {
         }
     }
     this.value = pairPoint;
+    return pairPoint;
 }
 inputBoxes[6].addEventListener('click', onePairHandler);
 
@@ -227,6 +237,7 @@ function twoPairHandler() {
         twoPairsPoint = 0;
     }
     this.value = twoPairsPoint;
+    return twoPairsPoint;
 }
 inputBoxes[7].addEventListener('click', twoPairHandler);
 
@@ -240,6 +251,7 @@ function threeSameHandler() {
         }
     }
     this.value = threeSamePoint;
+    return threeSamePoint;
 }
 inputBoxes[8].addEventListener('click', threeSameHandler);
 
@@ -252,6 +264,7 @@ function fourSameHandler() {
         }
     }
     this.value = fourSamePoint;
+    return fourSamePoint;
 }
 inputBoxes[9].addEventListener('click', fourSameHandler);
 
@@ -273,6 +286,7 @@ function fullHouseHandler() {
         fullHousePoint = 0;
     }
     this.value = fullHousePoint;
+    return fullHousePoint;
 }
 inputBoxes[10].addEventListener('click', fullHouseHandler);
 
@@ -283,6 +297,7 @@ function smallStraightHandler() {
         smallStraightPoint = 15;
     }
     this.value = smallStraightPoint;
+    return smallStraightPoint;
 }
 inputBoxes[11].addEventListener('click', smallStraightHandler);
 
@@ -293,6 +308,7 @@ function largeStraightHandler() {
         largeStraightPoint = 20;
     }
     this.value = largeStraightPoint;
+    return largeStraightPoint;
 }
 inputBoxes[12].addEventListener('click', largeStraightHandler);
 
@@ -302,6 +318,7 @@ function chancePointsHandler() {
         chancePoint += value;
     }
     this.value = chancePoint;
+    return chancePoint;
 }
 inputBoxes[13].addEventListener('click', chancePointsHandler);
 
@@ -314,5 +331,6 @@ function yatzyPointsHandler() {
         }
     }
     this.value = yatzyPoint;
+    return yatzyPoint;
 }
 inputBoxes[14].addEventListener('click', yatzyPointsHandler);
