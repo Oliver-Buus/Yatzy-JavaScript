@@ -1,23 +1,17 @@
-const dice = [];
 const diceImages = ['dice/dice-one.png', 'dice/dice-two.png',
                     'dice/dice-three.png', 'dice/dice-four.png',
-                    'dice/dice-five.png', 'dice/dice-six.png'];
+                    'dice/dice-five.png', 'dice/dice-six.png']; // Array med stien billederne af terningerne
+const dice = []; // Array med 'img'-elementerne af terningerne.
 const labels = ["1-s", "2-s", "3-s", "4-s", "5-s", "6-s",
                 "One pair", "Two pairs", "Three same",
                 "Four same", "Full house", "Small straight",
-                "Large straight", "Chance", "Yatzy"];
-const inputBoxes = [];
-let diceValues = new Array(5).fill(0);
+                "Large straight", "Chance", "Yatzy"]; // Array med strenge til brug for labels.
+const inputBoxes = []; // Array med alle 'input'-elementerne.
+let diceValues = new Array(5).fill(0); // Array med værdierne af hver die.
 
 let gridDice = document.getElementById('grid-dice');
 let diceDiv = document.getElementById('dice');
 let gridPoints = document.getElementById('grid-points');
-
-gridPoints.addEventListener('click', event => {
-    calculateBonus();
-    calculateTotal();
-})
-
 
 // Indsætter 5 billeder af terninger i gridDice
 for (let i = 0; i < 5; i++) {
@@ -29,91 +23,7 @@ for (let i = 0; i < 5; i++) {
     diceDiv.appendChild(img);
 }
 
-// Finder værdien af hver die og indsætter den i et array.
-function calculateDiceValues() {
-    diceValues.splice(0, diceValues.length); // Nulstiller værdierne
-
-    for (let die of dice) {
-        let src = die.src;
-        switch (true) {
-            case src.includes('one'):
-                diceValues.push(1);
-                break;
-            case src.includes('two'):
-                diceValues.push(2);
-                break;
-            case src.includes('three'):
-                diceValues.push(3);
-                break;
-            case src.includes('four'):
-                diceValues.push(4);
-                break;
-            case src.includes('five'):
-                diceValues.push(5);
-                break;
-            case src.includes('six'):
-                diceValues.push(6);
-                break;
-        }
-    }
-}
-
-// Funktion der ruller med terningerne.
-function rollDice() {
-    GameOver();
-    for (let die of dice) {
-        if (die.style.filter != 'brightness(0.75)') {
-            // Der skal være check på at terningen ikke bliver "holdt"
-            let randomNumber = Math.floor(Math.random() * 6);
-            die.src = diceImages[randomNumber];
-        }
-    }
-}
-
-
-for (let die of dice) {
-    die.addEventListener('click', event => {
-        if (die.style.filter == 'brightness(0.75)') {
-            die.style.filter = '';
-        } else if (rolls != 0) {
-            die.style.filter = 'brightness(0.75)';
-        }
-    })
-}
-
-let button = document.createElement('button');
-button.className = 'button';
-let rolls = 0;
-button.textContent = 'Roll\n' + rolls;
-button.addEventListener('click', event => {
-        rollDice();
-        calculateDiceValues();
-        // Placeholders til alle inputs
-        for (let i = 0; i < 6; i++) {
-            inputBoxes[i].placeholder = sameValuePointsHandlerPreShow(i + 1);
-        }
-        inputBoxes[6].placeholder = onePairHandler();
-        inputBoxes[7].placeholder = twoPairHandler();
-        inputBoxes[8].placeholder = threeSameHandler();
-        inputBoxes[9].placeholder = fourSameHandler();
-        inputBoxes[10].placeholder = fullHouseHandler();
-        inputBoxes[11].placeholder = smallStraightHandler();
-        inputBoxes[12].placeholder = largeStraightHandler();
-        inputBoxes[13].placeholder = chancePointsHandler();
-        inputBoxes[14].placeholder = yatzyPointsHandler();
-
-        if (rolls == 2) {
-            button.disabled = true;
-        }
-
-    rolls++;
-    button.textContent = 'Roll\n' + rolls;
-});
-
-gridDice.appendChild(button);
-
-
-// Indsætter labels og inputs på gridPoints
+// Indsætter labels og inputs i gridPoints
 for (let i = 0; i < labels.length; i++) {
     let labelInputDivElement = document.createElement('div');
     labelInputDivElement.className = 'labelInputDivElement';
@@ -154,6 +64,151 @@ function createInput(className, id, parent, index) {
     parent.appendChild(inputElement);
 }
 
+
+
+// Finder værdien af hver die og indsætter den i et array 'diceValues'.
+function calculateDiceValues() {
+    diceValues.splice(0, diceValues.length); // Nulstiller værdierne
+    
+    for (let die of dice) {
+        let src = die.src;
+        switch (true) {
+            case src.includes('one'):
+                diceValues.push(1);
+                break;
+            case src.includes('two'):
+                diceValues.push(2);
+                break;
+            case src.includes('three'):
+                diceValues.push(3);
+                break;
+            case src.includes('four'):
+                diceValues.push(4);
+                break;
+            case src.includes('five'):
+                diceValues.push(5);
+                break;
+            case src.includes('six'):
+                diceValues.push(6);
+                break;
+            }
+        }
+    }
+    
+// Opdaterer inputfelterne 'bonus' og 'total' når man trykker et sted i div'en grid-points
+gridPoints.addEventListener('click', event => {
+    calculateBonus();
+    calculateTotal();
+})
+
+// Funktion der, hvis terningen ikke er holdt, og spillet ikke er ovre,
+// genererer tal mellem 0 og 5. Skifter så billederne af dice ud med de
+// billeder der passer til det genererede tal.
+function rollDice() {
+    GameOver();
+    for (let die of dice) {
+        if (die.style.filter != 'brightness(0.75)') {
+            // Der skal være check på at terningen ikke bliver "holdt"
+            let randomNumber = Math.floor(Math.random() * 6);
+            die.src = diceImages[randomNumber];
+        }
+    }
+}
+
+// Tilføjer en eventListener til terningerne, så når man trykker på dem, 'holdes' de.
+for (let die of dice) {
+    die.addEventListener('click', event => {
+        if (die.style.filter == 'brightness(0.75)') {
+            die.style.filter = '';
+        } else if (rolls != 0) {
+            die.style.filter = 'brightness(0.75)';
+        }
+    })
+}
+
+// Laver en knap 'Roll'. Når der trykkes på knappen rulles terningerne og terningeværdierne udregnes.
+// Der sættes midlertidige værdier ind i alle inputs.
+// Har man rullet med terningerne 3 gange disables knappen.
+let button = document.createElement('button');
+button.className = 'button';
+let rolls = 0;
+button.textContent = 'Roll\n' + rolls;
+button.addEventListener('click', event => {
+        rollDice();
+        calculateDiceValues();
+        // Placeholders til alle inputs
+        for (let i = 0; i < 6; i++) {
+            inputBoxes[i].placeholder = sameValuePointsHandler(i + 1);
+        }
+        inputBoxes[6].placeholder = onePairHandler();
+        inputBoxes[7].placeholder = twoPairHandler();
+        inputBoxes[8].placeholder = threeSameHandler();
+        inputBoxes[9].placeholder = fourSameHandler();
+        inputBoxes[10].placeholder = fullHouseHandler();
+        inputBoxes[11].placeholder = smallStraightHandler();
+        inputBoxes[12].placeholder = largeStraightHandler();
+        inputBoxes[13].placeholder = chancePointsHandler();
+        inputBoxes[14].placeholder = yatzyPointsHandler();
+
+        if (rolls == 2) {
+            button.disabled = true;
+        }
+
+    rolls++;
+    button.textContent = 'Roll\n' + rolls;
+});
+gridDice.appendChild(button);
+
+
+// Tilføjer eventListeners til alle 'input'-elementer på 'click' og med tilsvarende funktioner.
+let inputs = document.getElementsByClassName('inputs');
+let functions = [sameValuePointsHandler.bind(null, 1), sameValuePointsHandler.bind(null, 2),
+    sameValuePointsHandler.bind(null, 3), sameValuePointsHandler.bind(null, 4),
+    sameValuePointsHandler.bind(null, 5), sameValuePointsHandler.bind(null, 6),
+    onePairHandler, twoPairHandler, threeSameHandler, fourSameHandler,
+    fullHouseHandler, smallStraightHandler, largeStraightHandler, chancePointsHandler, yatzyPointsHandler];
+
+for (let i = 0; i < inputs.length;i++) {
+    inputs[i].addEventListener('click', function handler() {
+        if (rolls != 0) {
+            let number = functions[i]();
+            inputs[i].value = number;
+            inputs[i].removeEventListener('click', handler);
+        }
+        rolls = 0;
+        button.textContent = 'Roll\n' + rolls;
+        button.disabled = false;
+        for (let die of dice) {
+            die.style.filter = 'brightness(1)';
+        }
+    })
+}
+
+// Tjekker om spillet er ovre, hvis det er, kommer en confirm, hvor man kan starte nyt spil
+function GameOver() {
+    let count = 0;
+    for (let input of inputs) {
+        let value = parseInt(input.value);
+        if (!isNaN(value)) {
+            count++;
+        }
+    }
+    if (count == inputs.length) {
+        let startNew = window.confirm("Spillet er slut. Start nyt spil");
+        if (startNew) {
+            location.reload();
+        }
+    }
+}
+
+
+
+
+
+
+// Spillogik
+
+
 // Returnerer summen af de 6 første pointfelter til BONUS
 function calculateBonus() {
     let sum = 0;
@@ -192,30 +247,15 @@ function frequency() {
     return frequency;
 }
 
-function sameValuePointsHandlerPreShow(amount) {
+// 1 - 6
+function sameValuePointsHandler(amount) {
         let sameValuePoint = 0;
         let freq = frequency();
-                sameValuePoint = amount * freq[amount];
+        sameValuePoint = amount * freq[amount];
         return sameValuePoint;
-        }
+}
     
-
-// Note til points - Måske flytte return statement en gang ned.
-function sameValuePointsHandler(amount) {
-return function() {
-
-    let sameValuePoint = 0;
-    let freq = frequency();
-    sameValuePoint = amount * freq[amount];
-
-    return sameValuePoint;
-    }
-}
-for (let i = 0; i < 6; i++) {
-    inputBoxes[i].addEventListener('click', sameValuePointsHandler(i + 1));
-}
-
-// ONE PAIR POINTS
+// Et par
 function onePairHandler() {
      let pairPoint = 0;
      let freq = frequency();
@@ -226,9 +266,8 @@ function onePairHandler() {
     }
     return pairPoint;
 }
-inputBoxes[6].addEventListener('click', onePairHandler);
 
-// TWO PAIR POINTS
+// To par
 function twoPairHandler() {
     let twoPairsPoint = 0;
     let freq = frequency();
@@ -244,9 +283,8 @@ function twoPairHandler() {
     }
     return twoPairsPoint;
 }
-inputBoxes[7].addEventListener('click', twoPairHandler);
 
-
+// Tre ens
 function threeSameHandler() {
     let threeSamePoint = 0;
     let freq = frequency();
@@ -258,8 +296,9 @@ function threeSameHandler() {
 
     return threeSamePoint;
 }
-inputBoxes[8].addEventListener('click', threeSameHandler);
 
+
+// Fire ens
 function fourSameHandler() {
     let fourSamePoint = 0;
     let freq = frequency();
@@ -271,8 +310,8 @@ function fourSameHandler() {
 
     return fourSamePoint;
 }
-inputBoxes[9].addEventListener('click', fourSameHandler);
 
+// Fuld hus
 function fullHouseHandler() {
     let fullHousePoint = 0;
     let freq = frequency();
@@ -293,8 +332,8 @@ function fullHouseHandler() {
 
     return fullHousePoint;
 }
-inputBoxes[10].addEventListener('click', fullHouseHandler);
 
+// Lille straight
 function smallStraightHandler() {
     let smallStraightPoint = 0;
     let freq = frequency();
@@ -304,8 +343,8 @@ function smallStraightHandler() {
 
     return smallStraightPoint;
 }
-inputBoxes[11].addEventListener('click', smallStraightHandler);
 
+// Stor straight
 function largeStraightHandler() {
     let largeStraightPoint = 0;
     let freq = frequency();
@@ -315,8 +354,8 @@ function largeStraightHandler() {
 
     return largeStraightPoint;
 }
-inputBoxes[12].addEventListener('click', largeStraightHandler);
 
+// Chance
 function chancePointsHandler() {
     let chancePoint = 0;
     for (let value of diceValues) {
@@ -325,8 +364,8 @@ function chancePointsHandler() {
 
     return chancePoint;
 }
-inputBoxes[13].addEventListener('click', chancePointsHandler);
 
+// Yatzy
 function yatzyPointsHandler() {
     let yatzyPoint = 0;
     let freq = frequency();
@@ -337,48 +376,4 @@ function yatzyPointsHandler() {
     }
 
     return yatzyPoint;
-}
-inputBoxes[14].addEventListener('click', yatzyPointsHandler);
-
-
-
-let inputs = document.getElementsByClassName('inputs');
-let functions = [sameValuePointsHandlerPreShow.bind(null, 1), sameValuePointsHandlerPreShow.bind(null, 2),
-    sameValuePointsHandlerPreShow.bind(null, 3), sameValuePointsHandlerPreShow.bind(null, 4),
-    sameValuePointsHandlerPreShow.bind(null, 5), sameValuePointsHandlerPreShow.bind(null, 6),
-    onePairHandler, twoPairHandler, threeSameHandler, fourSameHandler,
-    fullHouseHandler, smallStraightHandler, largeStraightHandler, chancePointsHandler, yatzyPointsHandler];
-
-// 
-for (let i = 0; i < inputs.length;i++) {
-    inputs[i].addEventListener('click', function handler() {
-        if (rolls != 0) {
-            let number = functions[i]();
-            inputs[i].value = number;
-            inputs[i].removeEventListener('click', handler);
-        }
-        rolls = 0;
-        button.textContent = 'Roll\n' + rolls;
-        button.disabled = false;
-        for (let die of dice) {
-            die.style.filter = 'brightness(1)';
-        }
-    })
-}
-
-// Tjekker om spillet er ovre, hvis det er, kommer en confirm, hvor man kan starte nyt spil
-function GameOver() {
-    let count = 0;
-    for (let input of inputs) {
-        let value = parseInt(input.value);
-        if (!isNaN(value)) {
-            count++;
-        }
-    }
-    if (count == inputs.length) {
-        let startNew = window.confirm("Spillet er slut. Start nyt spil");
-        if (startNew) {
-            location.reload();
-        }
-    }
 }
