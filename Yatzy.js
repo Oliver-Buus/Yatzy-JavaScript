@@ -201,6 +201,7 @@ return function() {
     let freq = frequency();
             sameValuePoint = amount * freq[amount];
     this.value = sameValuePoint;
+    this.removeEventListener('click', sameValuePointsHandler(amount));
     return sameValuePoint;
     }
 }
@@ -218,6 +219,7 @@ function onePairHandler() {
         }
     }
     this.value = pairPoint;
+    inputBoxes[6].removeEventListener('click', onePairHandler);
     return pairPoint;
 }
 inputBoxes[6].addEventListener('click', onePairHandler);
@@ -237,6 +239,7 @@ function twoPairHandler() {
         twoPairsPoint = 0;
     }
     this.value = twoPairsPoint;
+    inputBoxes[7].removeEventListener('click', twoPairHandler);
     return twoPairsPoint;
 }
 inputBoxes[7].addEventListener('click', twoPairHandler);
@@ -251,6 +254,7 @@ function threeSameHandler() {
         }
     }
     this.value = threeSamePoint;
+    inputBoxes[8].removeEventListener('click', threeSameHandler);
     return threeSamePoint;
 }
 inputBoxes[8].addEventListener('click', threeSameHandler);
@@ -264,6 +268,7 @@ function fourSameHandler() {
         }
     }
     this.value = fourSamePoint;
+    inputBoxes[9].removeEventListener('click', fourSameHandler);
     return fourSamePoint;
 }
 inputBoxes[9].addEventListener('click', fourSameHandler);
@@ -286,6 +291,7 @@ function fullHouseHandler() {
         fullHousePoint = 0;
     }
     this.value = fullHousePoint;
+    inputBoxes[10].removeEventListener('click', fullHouseHandler);
     return fullHousePoint;
 }
 inputBoxes[10].addEventListener('click', fullHouseHandler);
@@ -297,6 +303,7 @@ function smallStraightHandler() {
         smallStraightPoint = 15;
     }
     this.value = smallStraightPoint;
+    inputBoxes[11].removeEventListener('click', smallStraightHandler);
     return smallStraightPoint;
 }
 inputBoxes[11].addEventListener('click', smallStraightHandler);
@@ -308,6 +315,7 @@ function largeStraightHandler() {
         largeStraightPoint = 20;
     }
     this.value = largeStraightPoint;
+    inputBoxes[12].removeEventListener('click', largeStraightHandler);
     return largeStraightPoint;
 }
 inputBoxes[12].addEventListener('click', largeStraightHandler);
@@ -318,6 +326,7 @@ function chancePointsHandler() {
         chancePoint += value;
     }
     this.value = chancePoint;
+    inputBoxes[13].removeEventListener('click', chancePointsHandler);
     return chancePoint;
 }
 inputBoxes[13].addEventListener('click', chancePointsHandler);
@@ -331,6 +340,7 @@ function yatzyPointsHandler() {
         }
     }
     this.value = yatzyPoint;
+    inputBoxes[14].removeEventListener('click', yatzyPointsHandler);
     return yatzyPoint;
 }
 inputBoxes[14].addEventListener('click', yatzyPointsHandler);
