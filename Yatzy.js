@@ -60,6 +60,7 @@ function calculateDiceValues() {
 
 // Funktion der ruller med terningerne.
 function rollDice() {
+    GameOver();
     for (let die of dice) {
         if (die.style.filter != 'brightness(0.75)') {
             // Der skal være check på at terningen ikke bliver "holdt"
@@ -172,15 +173,15 @@ function calculateBonus() {
 // Returnerer total sum at alle point-felterne
 function calculateTotal() {
 let total = 0;
-    for (let i = 6; i <= 16; i++) {
+for (let i = 6; i <= 16; i++) {
         let value = parseInt(inputBoxes[i].value);
     if (!isNaN(value)) {
-        total += value;
+    total += value;
     }
 }
     document.getElementById('totalInput').value = total;
 }
-    
+
 // Tæller antallet af samme slags på terningerne
 function frequency() {
     let frequency = new Array(7).fill(0);
@@ -348,6 +349,7 @@ let functions = [sameValuePointsHandlerPreShow.bind(null, 1), sameValuePointsHan
     onePairHandler, twoPairHandler, threeSameHandler, fourSameHandler,
     fullHouseHandler, smallStraightHandler, largeStraightHandler, chancePointsHandler, yatzyPointsHandler];
 
+// 
 for (let i = 0; i < inputs.length;i++) {
     inputs[i].addEventListener('click', function handler() {
         if (rolls != 0) {
@@ -362,4 +364,21 @@ for (let i = 0; i < inputs.length;i++) {
             die.style.filter = 'brightness(1)';
         }
     })
+}
+
+// Tjekker om spillet er ovre, hvis det er, kommer en confirm, hvor man kan starte nyt spil
+function GameOver() {
+    let count = 0;
+    for (let input of inputs) {
+        let value = parseInt(input.value);
+        if (!isNaN(value)) {
+            count++;
+        }
+    }
+    if (count == inputs.length) {
+        let startNew = window.confirm("Spillet er slut. Start nyt spil");
+        if (startNew) {
+            location.reload();
+        }
+    }
 }
