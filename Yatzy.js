@@ -15,6 +15,7 @@ let gridPoints = document.getElementById('grid-points');
 
 gridPoints.addEventListener('click', event => {
     calculateBonus();
+    calculateTotal();
 })
 
 
@@ -128,7 +129,7 @@ for (let i = 0; i < labels.length; i++) {
 
     if (i == labels.length - 1) {
         createLabel('totalLabel', 'Total:', labelInputDivElement);
-        createInput('totalInput', 'totalInput', labelInputDivElement, 17);
+        createInput('totalInput', 'totalInput', labelInputDivElement, '17');
     }
 
     gridPoints.appendChild(labelInputDivElement);
@@ -169,12 +170,17 @@ function calculateBonus() {
 
 
 // Returnerer total sum at alle point-felterne
+function calculateTotal() {
 let total = 0;
-for (let inputBox of inputBoxes) {
-    if (!isNaN(inputBox.value))
-    total += inputBox.value;
+    for (let i = 6; i <= 16; i++) {
+        let value = parseInt(inputBoxes[i].value);
+    if (!isNaN(value)) {
+        total += value;
+    }
 }
-
+    document.getElementById('totalInput').value = total;
+}
+    
 // Tæller antallet af samme slags på terningerne
 function frequency() {
     let frequency = new Array(7).fill(0);
@@ -349,13 +355,11 @@ for (let i = 0; i < inputs.length;i++) {
             inputs[i].value = number;
             inputs[i].removeEventListener('click', handler);
         }
-
         rolls = 0;
         button.textContent = 'Roll\n' + rolls;
         button.disabled = false;
         for (let die of dice) {
             die.style.filter = 'brightness(1)';
         }
-
     })
 }
