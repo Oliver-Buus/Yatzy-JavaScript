@@ -36,16 +36,15 @@
     width: 30%;
     margin:0 auto;
     display:block;
-    text-align: left;
 }
 
 .labelInputDivElement {
     margin: 1rem;
-    text-align: left;
   }
 
 .inputs, .labels {
     display: inline-block;
+    text-align: left;
   }
 
 .sumAndBonusLabel, .totalLabel {
@@ -57,4 +56,16 @@
 .sumAndBonusInput, .totalInput {
     width: 8%;
     margin-left: 2%;
+}
+
+.button {
+    margin-left: 42%;
+    width: 16%;
+    height: 50%;
+    border-radius: 25%;
+}
+
+::placeholder {
+    font-style: italic;
+    opacity: 0.5;
 }

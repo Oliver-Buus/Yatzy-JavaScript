@@ -60,11 +60,14 @@ function calculateDiceValues() {
 // Funktion der ruller med terningerne.
 function rollDice() {
     for (let die of dice) {
-        // Der skal være check på at terningen ikke bliver "holdt"
-        let randomNumber = Math.floor(Math.random() * 6);
-        die.src = diceImages[randomNumber];
+        if (die.style.filter != 'brightness(0.75)') {
+            // Der skal være check på at terningen ikke bliver "holdt"
+            let randomNumber = Math.floor(Math.random() * 6);
+            die.src = diceImages[randomNumber];
+        }
     }
 }
+
 
 for (let die of dice) {
     die.addEventListener('click', event => {
@@ -77,10 +80,10 @@ for (let die of dice) {
 }
 
 let button = document.createElement('button');
-button.textContent = 'Roll';
+button.className = 'button';
 let rolls = 0;
+button.textContent = 'Roll\n' + rolls;
 button.addEventListener('click', event => {
-    if (rolls < 3) {
         rollDice();
         calculateDiceValues();
         // Placeholders til alle inputs
@@ -97,14 +100,12 @@ button.addEventListener('click', event => {
         inputBoxes[13].placeholder = chancePointsHandler();
         inputBoxes[14].placeholder = yatzyPointsHandler();
 
-        for(let dieValue of diceValues) {
-            console.log(dieValue);
-        }
         if (rolls == 2) {
             button.disabled = true;
         }
-    }
+
     rolls++;
+    button.textContent = 'Roll\n' + rolls;
 });
 
 gridDice.appendChild(button);
@@ -218,8 +219,6 @@ function onePairHandler() {
            pairPoint = i * 2;
         }
     }
-    this.value = pairPoint;
-    inputBoxes[6].removeEventListener('click', onePairHandler);
     return pairPoint;
 }
 inputBoxes[6].addEventListener('click', onePairHandler);
@@ -238,8 +237,10 @@ function twoPairHandler() {
     if (pairs < 2) {
         twoPairsPoint = 0;
     }
-    this.value = twoPairsPoint;
-    inputBoxes[7].removeEventListener('click', twoPairHandler);
+    if (rolls > 0) {
+        this.value = twoPairsPoint;
+        inputBoxes[7].removeEventListener('click', twoPairHandler);
+    }
     return twoPairsPoint;
 }
 inputBoxes[7].addEventListener('click', twoPairHandler);
@@ -253,6 +254,7 @@ function threeSameHandler() {
             threeSamePoint = i * 3;
         }
     }
+
     this.value = threeSamePoint;
     inputBoxes[8].removeEventListener('click', threeSameHandler);
     return threeSamePoint;
@@ -344,3 +346,25 @@ function yatzyPointsHandler() {
     return yatzyPoint;
 }
 inputBoxes[14].addEventListener('click', yatzyPointsHandler);
+
+
+
+let inputs = document.getElementsByClassName('inputs');
+const functions = [];s
+
+for (let input of inputs) {
+    input.addEventListener('click', function handler() {
+        if (rolls != 0) {
+            input.value = onePairHandler();
+            input.removeEventListener('click', handler);
+        }
+
+        rolls = 0;
+        button.textContent = 'Roll\n' + rolls;
+        button.disabled = false;
+        for (let die of dice) {
+            die.style.filter = 'brightness(1)';
+        }
+
+    })
+}
