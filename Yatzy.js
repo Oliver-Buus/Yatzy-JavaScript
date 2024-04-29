@@ -227,12 +227,12 @@ function calculateBonus() {
 
 // Returnerer total sum at alle point-felterne
 function calculateTotal() {
-let total = 0;
-for (let i = 6; i <= 16; i++) {
+    let total = 0;
+    for (let i = 6; i <= 16; i++) {
         let value = parseInt(inputBoxes[i].value);
-    if (!isNaN(value)) {
-    total += value;
-    }
+        if (!isNaN(value)) {
+            total += value;
+        }
 }
     document.getElementById('totalInput').value = total;
 }
@@ -249,10 +249,10 @@ function frequency() {
 
 // 1 - 6
 function sameValuePointsHandler(amount) {
-        let sameValuePoint = 0;
-        let freq = frequency();
-        sameValuePoint = amount * freq[amount];
-        return sameValuePoint;
+    let sameValuePoint = 0;
+    let freq = frequency();
+    sameValuePoint = amount * freq[amount];
+    return sameValuePoint;
 }
     
 // Et par
